@@ -1,0 +1,383 @@
+{
+  "address": "8pi72KheoUYrFS4DhZwqQBYGuDEGrjzCyWmazCVHJFYK",
+  "version": "1.0.0",
+  "name": "uat_factory",
+  "instructions": [
+    {
+      "name": "initializeFactory",
+      "accounts": [
+        {
+          "name": "factory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "createPropertyToken",
+      "accounts": [
+        {
+          "name": "factory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "property",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "metadataUri",
+          "type": "string"
+        },
+        {
+          "name": "tokenName",
+          "type": "string"
+        },
+        {
+          "name": "tokenSymbol",
+          "type": "string"
+        },
+        {
+          "name": "totalSupply",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "addToWhitelist",
+      "accounts": [
+        {
+          "name": "property",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "whitelist",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "investor",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "investor",
+          "type": "publicKey"
+        },
+        {
+          "name": "kycHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "isAccredited",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "mintPropertyTokens",
+      "accounts": [
+        {
+          "name": "property",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "whitelist",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "recipientTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "recipient",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateMetadataUri",
+      "accounts": [
+        {
+          "name": "property",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newMetadataUri",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Factory",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalProperties",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PropertyToken",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "factory",
+            "type": "publicKey"
+          },
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "metadataUri",
+            "type": "string"
+          },
+          {
+            "name": "tokenName",
+            "type": "string"
+          },
+          {
+            "name": "tokenSymbol",
+            "type": "string"
+          },
+          {
+            "name": "totalSupply",
+            "type": "u64"
+          },
+          {
+            "name": "mintedSupply",
+            "type": "u64"
+          },
+          {
+            "name": "uniqueInvestors",
+            "type": "u16"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
+          },
+          {
+            "name": "lockUpEndDate",
+            "type": "i64"
+          },
+          {
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InvestorWhitelist",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "property",
+            "type": "publicKey"
+          },
+          {
+            "name": "investor",
+            "type": "publicKey"
+          },
+          {
+            "name": "kycHash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "isAccredited",
+            "type": "bool"
+          },
+          {
+            "name": "whitelistedAt",
+            "type": "i64"
+          },
+          {
+            "name": "isActive",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 12000,
+      "name": "InvalidMetadataUri",
+      "msg": "Metadata URI must start with 'ipfs://'"
+    },
+    {
+      "code": 12001,
+      "name": "SymbolTooLong",
+      "msg": "Token symbol must be 10 characters or less"
+    },
+    {
+      "code": 12002,
+      "name": "InvalidSupply",
+      "msg": "Total supply must be greater than 0"
+    },
+    {
+      "code": 12003,
+      "name": "PropertyInactive",
+      "msg": "Property token is inactive"
+    },
+    {
+      "code": 12004,
+      "name": "ExceedsSupply",
+      "msg": "Minting would exceed total supply"
+    },
+    {
+      "code": 12005,
+      "name": "NotWhitelisted",
+      "msg": "Investor not whitelisted (KYC required)"
+    },
+    {
+      "code": 12006,
+      "name": "NotAccredited",
+      "msg": "Investor not accredited (Reg D 506(c) requirement)"
+    },
+    {
+      "code": 12007,
+      "name": "InvestorCapReached",
+      "msg": "Maximum 2,000 investors reached (Reg D limit)"
+    },
+    {
+      "code": 12008,
+      "name": "Unauthorized",
+      "msg": "Only property authority can perform this action"
+    }
+  ]
+}

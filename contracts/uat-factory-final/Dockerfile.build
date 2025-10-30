@@ -1,0 +1,16 @@
+FROM projectserum/build:v0.29.0
+
+WORKDIR /workspace
+
+# Copy project files
+COPY . .
+
+# Install dependencies
+RUN cargo build-sbf || cargo build-bpf
+
+# Build the contract
+RUN anchor build
+
+# The compiled output will be in target/deploy/
+CMD ["sh", "-c", "ls -lh target/deploy/ && cat target/deploy/*.so > /dev/stdout"]
+

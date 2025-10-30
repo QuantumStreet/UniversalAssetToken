@@ -1,0 +1,24 @@
+[package]
+name = "uat_factory"
+version = "1.0.0"
+description = "Universal Asset Token Factory for Property Tokenization with Reg D 506(c) Compliance"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "uat_factory"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+default = []
+
+[dependencies]
+anchor-lang = { version = "0.32.1", features = ["init-if-needed"] }
+anchor-spl = { version = "0.32.1", features = ["token", "associated_token"] }
+
+[dev-dependencies]
+anchor-client = "0.32.1"

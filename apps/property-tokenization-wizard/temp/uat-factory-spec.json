@@ -1,0 +1,117 @@
+{
+  "contractType": "UAT_FACTORY",
+  "blockchain": "solana",
+  "network": "devnet",
+  "parameters": {
+    "name": "UAT Property Token Factory",
+    "description": "Universal Asset Token factory for property tokenization with Wyoming Trust compliance",
+    "version": "1.0.0",
+    "features": {
+      "propertyTokenCreation": true,
+      "investorWhitelisting": true,
+      "kycCompliance": true,
+      "accreditationChecks": true,
+      "supplyManagement": true,
+      "investorCapEnforcement": true
+    },
+    "compliance": {
+      "maxInvestors": 2000,
+      "lockUpPeriod": 365,
+      "accreditedOnly": true,
+      "kycRequired": true
+    },
+    "instructions": [
+      {
+        "name": "initialize_factory",
+        "description": "Initialize the UAT factory",
+        "accounts": [
+          "factory",
+          "authority",
+          "system_program"
+        ],
+        "parameters": []
+      },
+      {
+        "name": "create_property_token",
+        "description": "Create a new property token collection",
+        "accounts": [
+          "factory",
+          "property",
+          "mint",
+          "authority",
+          "token_program",
+          "system_program",
+          "rent"
+        ],
+        "parameters": [
+          {
+            "name": "metadata_uri",
+            "type": "String",
+            "maxLength": 200
+          },
+          {
+            "name": "token_name",
+            "type": "String",
+            "maxLength": 64
+          },
+          {
+            "name": "token_symbol",
+            "type": "String",
+            "maxLength": 10
+          },
+          {
+            "name": "total_supply",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "add_to_whitelist",
+        "description": "Add an investor to the whitelist",
+        "accounts": [
+          "property",
+          "whitelist",
+          "investor",
+          "authority",
+          "system_program"
+        ],
+        "parameters": [
+          {
+            "name": "investor",
+            "type": "Pubkey"
+          },
+          {
+            "name": "kyc_hash",
+            "type": "[u8; 32]"
+          },
+          {
+            "name": "is_accredited",
+            "type": "bool"
+          }
+        ]
+      },
+      {
+        "name": "mint_property_tokens",
+        "description": "Mint tokens to a whitelisted investor",
+        "accounts": [
+          "property",
+          "mint",
+          "whitelist",
+          "recipient_token_account",
+          "recipient",
+          "authority",
+          "token_program",
+          "associated_token_program",
+          "system_program",
+          "rent"
+        ],
+        "parameters": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    ]
+  }
+}
